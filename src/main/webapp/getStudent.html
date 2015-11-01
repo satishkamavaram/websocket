@@ -1,0 +1,46 @@
+<!DOCTYPE html>  
+<html>
+<head>
+<meta charset="utf-8" />
+  <title>WebSocket</title>  
+  
+  <h1>Here is the last studend added to system : </h1>
+  
+  <script language="javascript" type="text/javascript">
+  
+
+  function webSocket()
+  {
+            
+               var  ws = new WebSocket("ws://localhost:8080/websocket/lastStudent");
+  
+               ws.onopen = function()
+               {
+                  // Web Socket is connected, send data using send()
+                //  ws.send("{\"id\":\"1\",\"name\":\"satish\"}");
+                //  alert("Message is sent...");
+               };
+				
+               ws.onmessage = function (evt) 
+               { 
+                  var received_msg = evt.data;
+                 // alert("Message is received..."+received_msg);
+                  var obj = JSON.parse(received_msg);
+                  var displayStudent = "Student Id : "+obj.id+" , Student Name : "+obj.name;
+                  document.write(displayStudent);
+                  document.writeln("<br>");
+               };
+				
+               ws.onclose = function()
+               { 
+                  // websocket is closed.
+                  alert("Connection is closed..."); 
+               };
+  }
+   </script>
+ </head>
+ <body onload="webSocket()">
+      
+   </body>
+</html>
+   

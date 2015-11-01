@@ -1,0 +1,63 @@
+<!DOCTYPE html>  
+<html>
+<head>
+<meta charset="utf-8" />
+  <title>WebSocket</title>  
+  <h1>Add Student :</h1>
+  <script language="javascript" type="text/javascript">
+   var ws =  null;
+  function registerStudent()
+  {
+              if(!ws)  
+                 ws = new WebSocket("ws://localhost:8080/websocket/addStudent");
+  
+			  var studentId=document.getElementById('studentId').value;
+			  var studentName=document.getElementById('name').value;
+			  
+			  var jsonMessage = {"id" :studentId , "name" : studentName};
+			  
+			  ws.send(JSON.stringify(jsonMessage));
+			  
+               ws.onopen = function()
+               {
+                  // Web Socket is connected, send data using send()
+                  ws.send("{\"id\":\"1\",\"name\":\"satish\"}");
+               //   alert("Message is sent...");
+               };
+				
+               ws.onmessage = function (evt) 
+               { 
+                  var received_msg = evt.data;
+                //  alert("Message is received..."+received_msg);
+               };
+				
+               ws.onclose = function()
+               { 
+                  // websocket is closed.
+                  alert("Connection is closed..."); 
+               };
+  }
+  
+   </script>
+ </head>
+ <body>
+      <div>
+       <form id="register">
+       <table width="200" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td><label for="studentId">StudentId*:</label>
+		        <input type="text" id="studentId" name="studentId" />
+		    </td>
+		  </tr>
+		  <tr>
+		    <td><label for="name">StudentName*:</label>
+		        <input type="text" id="name" name="studentName" />
+		    </td>
+		  </tr>  
+	   </table>
+	   <input class="button" name="submit" type="button" value="submit" onclick="registerStudent()" />
+       </form>
+      </div>
+   </body>
+</html>
+   
